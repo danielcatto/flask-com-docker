@@ -1,12 +1,25 @@
-version: '2'
-services:
-    web:
-        build: .
-        ports:
-            - "5000:5000"
-        volumes:
-            - .:/code
+version: '3.8'
+services: 
+    api-service:
+        build: ./api-nasa/
+        volumes: 
+            - ./api-nasa/:/usr/src/app/
+        ports: 
+            - 5000:5000
+        environment: 
+            PORT: 5000
+            FLASK_DEBUG: 1
+        
         depends_on:
-            - redis 
-    redis:
-        image: redis
+            - database
+       
+    database:
+      image: "postgres" # use latest official postgres version
+      env_file:
+        - database.env # configure postgres
+      volumes:
+        - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+
+
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose

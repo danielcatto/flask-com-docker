@@ -3,10 +3,10 @@ from flask import Flask, jsonify, render_template
 app = Flask(__name__)
 
 #we define the route /
-@app.route('/welcome')
-def welcome():
+@app.route('/howare')
+def howare():
     # return a json
-    return jsonify({'status': 'api working'})
+    return jsonify([{'status': 'api working'},{'api': 'daniel'}])
 
 @app.route('/')
 def index():
